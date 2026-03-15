@@ -8,24 +8,16 @@
     <style>
         :root {
             --bg: #0A0A0A;
-            --card-bg: #1C1C1E;
-            --text: #FFFFFF;
-            --text-secondary: #8E8E93;
-            --accent: #5B2EFF;
-            --accent-yellow: #FFD600;
-            --accent-blue: #007AFF;
+            --card: #1A1A1C;
+            --text: #F5F5F7;
+            --muted: #8E8E93;
+            --yellow: #FFD60A;
+            --yellow-dim: rgba(255, 214, 10, 0.08);
             --separator: #2C2C2E;
-            --radius-card: 16px;
-            --radius-btn: 24px;
-            --radius-sm: 12px;
+            --radius: 16px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
@@ -36,35 +28,58 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* ===== Header ===== */
-        .header {
-            padding: 28px 0 20px;
+        /* ===== Hero ===== */
+        .hero {
+            padding: 32px 0 8px;
+            text-align: center;
         }
 
-        .header h1 {
-            font-size: 32px;
+        .hero-emoji {
+            font-size: 56px;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 {
+            font-size: 28px;
             font-weight: 800;
             letter-spacing: -0.5px;
-            margin-bottom: 6px;
+            margin-bottom: 10px;
         }
 
-        .header p {
-            color: var(--text-secondary);
+        .hero h1 .name {
+            color: var(--yellow);
+        }
+
+        .hero-subtitle {
+            color: var(--muted);
             font-size: 15px;
-            font-weight: 400;
+            line-height: 1.5;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .hero-age {
+            display: inline-block;
+            margin-top: 12px;
+            background: var(--yellow-dim);
+            color: var(--yellow);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 20px;
         }
 
         /* ===== Stats ===== */
         .stats {
             display: flex;
             gap: 10px;
-            margin-bottom: 24px;
+            margin: 24px 0;
         }
 
         .stat-card {
             flex: 1;
-            background: var(--card-bg);
-            border-radius: var(--radius-card);
+            background: var(--card);
+            border-radius: var(--radius);
             padding: 14px;
             text-align: center;
         }
@@ -72,116 +87,110 @@
         .stat-number {
             font-size: 24px;
             font-weight: 700;
-            color: var(--accent);
-        }
-
-        .stat-number.yellow {
-            color: var(--accent-yellow);
-        }
-
-        .stat-number.green {
-            color: #34C759;
+            color: var(--yellow);
         }
 
         .stat-label {
             font-size: 11px;
-            color: var(--text-secondary);
+            color: var(--muted);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-top: 2px;
         }
 
-        /* ===== Category Label ===== */
-        .category-label {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin: 24px 0 12px 4px;
-        }
-
-        .category-label .dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin-right: 6px;
-            vertical-align: middle;
-        }
-
-        .dot.green { background: #34C759; }
-        .dot.purple { background: var(--accent); }
-        .dot.blue { background: #4FACFE; }
-
         /* ===== Gift Card ===== */
         .gift-card {
-            background: var(--card-bg);
-            border-radius: var(--radius-card);
-            padding: 16px;
-            margin-bottom: 12px;
-            transition: opacity 0.3s ease;
+            background: var(--card);
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: opacity 0.3s;
             position: relative;
         }
 
         .gift-card.booked {
-            opacity: 0.4;
+            opacity: 0.35;
         }
 
-        .gift-card-top {
+        /* Image area */
+        .gift-image {
+            width: 100%;
+            height: 200px;
+            background: #F4F4F6;
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gift-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gift-image .price-tag {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.75);
+            color: var(--yellow);
+            font-size: 16px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* Card body */
+        .gift-body {
+            padding: 16px;
         }
 
         .gift-name {
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 600;
             line-height: 1.35;
-            flex: 1;
+            margin-bottom: 4px;
         }
 
-        .gift-price {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--accent);
-            white-space: nowrap;
+        .gift-comment {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.4;
+            margin-bottom: 14px;
+            font-style: italic;
         }
 
-        .gift-bottom {
+        .gift-actions {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 14px;
         }
 
         .gift-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            color: var(--text-secondary);
+            color: var(--muted);
             font-size: 13px;
             text-decoration: none;
             padding: 6px 12px;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             transition: background 0.2s;
         }
 
         .gift-link:active {
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        /* ===== Buttons ===== */
+        /* ===== Button ===== */
         .btn-book {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
             background: transparent;
-            color: var(--accent-yellow);
-            border: 1.5px solid var(--accent-yellow);
-            border-radius: var(--radius-btn);
+            color: var(--yellow);
+            border: 1.5px solid var(--yellow);
+            border-radius: 24px;
             padding: 8px 18px;
             font-size: 13px;
             font-weight: 600;
@@ -191,41 +200,42 @@
         }
 
         .btn-book:active {
-            background: rgba(255, 214, 0, 0.1);
+            background: var(--yellow-dim);
             transform: scale(0.97);
         }
 
         .btn-book:disabled {
             border-color: var(--separator);
-            color: var(--text-secondary);
+            color: var(--muted);
             cursor: default;
+            background: transparent;
         }
 
         .btn-book.done {
-            border-color: #34C759;
-            color: #34C759;
-            background: rgba(52, 199, 89, 0.08);
+            border-color: var(--muted);
+            color: var(--muted);
+            background: rgba(255, 255, 255, 0.03);
         }
 
-        /* ===== Booked Badge ===== */
+        /* ===== Booked ===== */
         .booked-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
             font-size: 12px;
-            color: #34C759;
-            margin-top: 10px;
+            color: var(--muted);
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .booked-badge::before {
             content: '✓';
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             width: 16px;
             height: 16px;
-            background: #34C759;
-            color: #fff;
+            background: var(--muted);
+            color: var(--bg);
             border-radius: 50%;
             font-size: 10px;
             font-weight: 700;
@@ -235,8 +245,16 @@
         .footer {
             text-align: center;
             padding: 32px 0 16px;
-            color: var(--text-secondary);
+            color: var(--muted);
             font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .footer .note {
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: var(--yellow);
+            opacity: 0.6;
         }
 
         /* ===== Toast ===== */
@@ -245,11 +263,11 @@
             bottom: 90px;
             left: 50%;
             transform: translateX(-50%) translateY(80px);
-            background: var(--card-bg);
+            background: var(--card);
             border: 1px solid var(--separator);
             color: var(--text);
             padding: 12px 24px;
-            border-radius: var(--radius-card);
+            border-radius: var(--radius);
             font-size: 14px;
             font-weight: 500;
             z-index: 10000;
@@ -275,33 +293,25 @@
         .confetti-piece {
             position: absolute;
             border-radius: 2px;
-            animation: confetti-fall 2.2s ease-out forwards;
+            animation: fall 2.2s ease-out forwards;
         }
 
-        @keyframes confetti-fall {
-            0% { transform: translateY(-20px) rotate(0deg) scale(1); opacity: 1; }
+        @keyframes fall {
+            0% { transform: translateY(-20px) rotate(0) scale(1); opacity: 1; }
             80% { opacity: 1; }
             100% { transform: translateY(100vh) rotate(720deg) scale(0.5); opacity: 0; }
-        }
-
-        /* ===== Empty state ===== */
-        .empty-state {
-            text-align: center;
-            padding: 48px 20px;
-            color: var(--text-secondary);
-        }
-
-        .empty-state .emoji {
-            font-size: 48px;
-            margin-bottom: 12px;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>🎁 Wishlist</h1>
-        <p>Выберите подарок и забронируйте анонимно</p>
+    <div class="hero">
+        <div class="hero-emoji">🎂</div>
+        <h1>Вишлист <span class="name">Влада</span></h1>
+        <div class="hero-subtitle">
+            Человеку скоро 30, а он мечтает о фильтре для воды и массажёре для ног. Да, мы тоже в шоке.
+        </div>
+        <div class="hero-age">⚠️ Почти 30. Не шутка.</div>
     </div>
 
     <div class="stats">
@@ -310,59 +320,66 @@
             <div class="stat-label">Всего</div>
         </div>
         <div class="stat-card">
-            <div class="stat-number yellow" id="available-count">3</div>
+            <div class="stat-number" id="available-count">3</div>
             <div class="stat-label">Доступно</div>
         </div>
         <div class="stat-card">
-            <div class="stat-number green" id="booked-count">0</div>
+            <div class="stat-number" id="booked-count">0</div>
             <div class="stat-label">Забронировано</div>
         </div>
     </div>
 
-    <!-- До $50 -->
-    <div class="category-label"><span class="dot green"></span>До $50</div>
-
+    <!-- Gift 1 -->
     <div class="gift-card" data-id="water-filter">
-        <div class="gift-card-top">
+        <div class="gift-image">
+            <img src="https://cdn1.ozone.ru/s3/multimedia-1-v/7065583571.jpg" alt="Фильтр" onerror="this.parentElement.innerHTML='🚰'">
+            <div class="price-tag">$45</div>
+        </div>
+        <div class="gift-body">
             <div class="gift-name">Фильтр обратного осмоса Stoewer A7</div>
-            <div class="gift-price">$45</div>
-        </div>
-        <div class="gift-bottom">
-            <a href="https://ozon.kz/product/filtr-obratnogo-osmosa-stoewer-a7-nabor-smennyh-kartridzhey-k3-3-sht-1586447237/" class="gift-link" target="_blank">🔗 Ozon.kz</a>
-            <button class="btn-book" onclick="bookGift('water-filter')">🎁 Забронировать</button>
+            <div class="gift-comment">«Мне почти 30, и самое горячее желание — чистая вода из-под крана. Вот такая взрослая жизнь.»</div>
+            <div class="gift-actions">
+                <a href="https://ozon.kz/product/filtr-obratnogo-osmosa-stoewer-a7-nabor-smennyh-kartridzhey-k3-3-sht-1586447237/" class="gift-link" target="_blank">🔗 Ozon.kz</a>
+                <button class="btn-book" onclick="bookGift('water-filter')">Забронировать</button>
+            </div>
         </div>
     </div>
 
-    <!-- $50 — $200 -->
-    <div class="category-label"><span class="dot purple"></span>$50 — $200</div>
-
+    <!-- Gift 2 -->
     <div class="gift-card" data-id="foot-massager">
-        <div class="gift-card-top">
-            <div class="gift-name">Массажер для ног электрический Foot Spa</div>
-            <div class="gift-price">$120</div>
+        <div class="gift-image">
+            <img src="https://cdn1.ozone.ru/s3/multimedia-1-n/7340755667.jpg" alt="Массажёр" onerror="this.parentElement.innerHTML='🦶'">
+            <div class="price-tag">$120</div>
         </div>
-        <div class="gift-bottom">
-            <a href="https://ozon.kz/product/massazher-dlya-nog-i-beder-elektricheskiy-foot-spa-3-rezhima-massazha-s-podogrevom-puf-3165162282/" class="gift-link" target="_blank">🔗 Ozon.kz</a>
-            <button class="btn-book" onclick="bookGift('foot-massager')">🎁 Забронировать</button>
+        <div class="gift-body">
+            <div class="gift-name">Массажёр для ног Foot Spa</div>
+            <div class="gift-comment">«Ноги болят как у пенсионера. Осталось только кресло-качалку заказать и картину маслом.»</div>
+            <div class="gift-actions">
+                <a href="https://ozon.kz/product/massazher-dlya-nog-i-beder-elektricheskiy-foot-spa-3-rezhima-massazha-s-podogrevom-puf-3165162282/" class="gift-link" target="_blank">🔗 Ozon.kz</a>
+                <button class="btn-book" onclick="bookGift('foot-massager')">Забронировать</button>
+            </div>
         </div>
     </div>
 
-    <!-- $500+ -->
-    <div class="category-label"><span class="dot blue"></span>$500+</div>
-
+    <!-- Gift 3 -->
     <div class="gift-card" data-id="bambu-h2s">
-        <div class="gift-card-top">
-            <div class="gift-name">Bambu Lab A1 mini — 3D принтер</div>
-            <div class="gift-price">$599</div>
+        <div class="gift-image">
+            <img src="https://cdn.bambulab.com/product/a1-mini/a1-mini-mainImg.png" alt="3D принтер" onerror="this.parentElement.innerHTML='🖨️'">
+            <div class="price-tag">$599</div>
         </div>
-        <div class="gift-bottom">
-            <a href="https://bambulab.com/en/a1-mini" class="gift-link" target="_blank">🔗 Bambu Lab</a>
-            <button class="btn-book" onclick="bookGift('bambu-h2s')">🎁 Забронировать</button>
+        <div class="gift-body">
+            <div class="gift-name">Bambu Lab A1 mini — 3D принтер</div>
+            <div class="gift-comment">«Ладно, хоть одно желание из 2015 года. Но нет, он не будет печатать ничего полезного. Только фигурки.»</div>
+            <div class="gift-actions">
+                <a href="https://bambulab.com/en/a1-mini" class="gift-link" target="_blank">🔗 Bambu Lab</a>
+                <button class="btn-book" onclick="bookGift('bambu-h2s')">Забронировать</button>
+            </div>
         </div>
     </div>
 
     <div class="footer">
-        Сделано с ❤️ Максом 🤖
+        <div class="note">🎈 Спасибо, что терпите его вишлист</div>
+        Сделано ИИ-ассистентом, который знает Влада лучше, чем он сам
     </div>
 
     <div class="toast" id="toast"></div>
@@ -372,55 +389,46 @@
         const tg = window.Telegram.WebApp;
         tg.ready();
         tg.expand();
+        try { tg.setHeaderColor('#0A0A0A'); tg.setBackgroundColor('#0A0A0A'); } catch(e) {}
 
-        // Sync with Telegram theme
-        try {
-            tg.setHeaderColor('#0A0A0A');
-            tg.setBackgroundColor('#0A0A0A');
-        } catch(e) {}
+        let booked = JSON.parse(localStorage.getItem('wishlist_v2') || '{}');
+        document.addEventListener('DOMContentLoaded', render);
 
-        let bookedGifts = JSON.parse(localStorage.getItem('wishlist_booked') || '{}');
-
-        document.addEventListener('DOMContentLoaded', updateUI);
-
-        function updateUI() {
-            let booked = 0;
-            document.querySelectorAll('.gift-card').forEach(card => {
-                const id = card.dataset.id;
-                if (bookedGifts[id]) {
-                    booked++;
-                    card.classList.add('booked');
-
-                    const btn = card.querySelector('.btn-book');
-                    btn.innerHTML = '✓ Забронировано';
+        function render() {
+            let cnt = 0;
+            document.querySelectorAll('.gift-card').forEach(c => {
+                const id = c.dataset.id;
+                if (booked[id]) {
+                    cnt++;
+                    c.classList.add('booked');
+                    const btn = c.querySelector('.btn-book');
+                    btn.textContent = '✓ Забронировано';
                     btn.disabled = true;
                     btn.classList.add('done');
-
-                    if (!card.querySelector('.booked-badge')) {
-                        const badge = document.createElement('div');
-                        badge.className = 'booked-badge';
-                        badge.textContent = 'Кто-то уже выбрал этот подарок';
-                        card.appendChild(badge);
+                    if (!c.querySelector('.booked-badge')) {
+                        const b = document.createElement('div');
+                        b.className = 'booked-badge';
+                        b.textContent = 'Кто-то уже осчастливил Влада этим подарком';
+                        c.querySelector('.gift-body').appendChild(b);
                     }
                 }
             });
-
             const total = document.querySelectorAll('.gift-card').length;
             document.getElementById('total-count').textContent = total;
-            document.getElementById('available-count').textContent = total - booked;
-            document.getElementById('booked-count').textContent = booked;
+            document.getElementById('available-count').textContent = total - cnt;
+            document.getElementById('booked-count').textContent = cnt;
         }
 
-        function showToast(text) {
-            const t = document.getElementById('toast');
-            t.textContent = text;
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 2500);
+        function showToast(t) {
+            const el = document.getElementById('toast');
+            el.textContent = t;
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 2500);
         }
 
-        function fireConfetti() {
-            const overlay = document.getElementById('confetti');
-            const colors = ['#5B2EFF', '#FFD600', '#34C759', '#4FACFE', '#FF6B6B', '#FF9F43'];
+        function confetti() {
+            const o = document.getElementById('confetti');
+            const colors = ['#FFD60A', '#FF9F0A', '#FF6B6B', '#FFFFFF', '#FFE066'];
             for (let i = 0; i < 35; i++) {
                 const p = document.createElement('div');
                 p.className = 'confetti-piece';
@@ -429,43 +437,30 @@
                 p.style.animationDelay = Math.random() * 0.4 + 's';
                 p.style.width = (Math.random() * 7 + 4) + 'px';
                 p.style.height = (Math.random() * 7 + 4) + 'px';
-                overlay.appendChild(p);
+                o.appendChild(p);
             }
-            setTimeout(() => overlay.innerHTML = '', 2500);
+            setTimeout(() => o.innerHTML = '', 2500);
         }
 
-        function bookGift(giftId) {
-            if (bookedGifts[giftId]) {
-                showToast('⚠️ Уже забронировано');
-                return;
-            }
+        function bookGift(id) {
+            if (booked[id]) { showToast('⚠️ Уже забронировано'); return; }
 
-            const userName = tg.initDataUnsafe?.user?.first_name || 'Аноним';
+            const name = tg.initDataUnsafe?.user?.first_name || 'Аноним';
 
-            tg.showConfirm('Забронировать этот подарок?', function(ok) {
+            tg.showConfirm('Забронировать этот подарок для почти-30-летнего Влада?', function(ok) {
                 if (!ok) return;
+                booked[id] = { by: name, at: new Date().toISOString() };
+                localStorage.setItem('wishlist_v2', JSON.stringify(booked));
 
-                bookedGifts[giftId] = {
-                    by: userName,
-                    at: new Date().toISOString()
-                };
-                localStorage.setItem('wishlist_booked', JSON.stringify(bookedGifts));
-
-                const title = document.querySelector(`[data-id="${giftId}"] .gift-name`).textContent;
-
+                const title = document.querySelector(`[data-id="${id}"] .gift-name`).textContent;
                 try {
-                    tg.sendData(JSON.stringify({
-                        action: 'gift_booked',
-                        giftId, giftTitle: title, bookedBy: userName
-                    }));
+                    tg.sendData(JSON.stringify({ action: 'gift_booked', giftId: id, giftTitle: title, bookedBy: name }));
                 } catch(e) {}
 
-                fireConfetti();
+                confetti();
                 showToast('🎉 ' + title + ' — забронировано!');
-
                 try { tg.HapticFeedback.notificationOccurred('success'); } catch(e) {}
-
-                updateUI();
+                render();
             });
         }
     </script>
