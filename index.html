@@ -5,415 +5,364 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>🎁 Wishlist</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: var(--tg-theme-bg-color, #0a0a0a);
-            --text: var(--tg-theme-text-color, #ffffff);
-            --hint: var(--tg-theme-hint-color, #8e8e93);
-            --link: var(--tg-theme-link-color, #007AFF);
-            --btn: var(--tg-theme-button-color, #007AFF);
-            --btn-text: var(--tg-theme-button-text-color, #ffffff);
-            --section-bg: var(--tg-theme-section-bg-color, #1c1c1e);
-            --section-sep: var(--tg-theme-section-separator-color, #2c2c2e);
-            --secondary-bg: var(--tg-theme-secondary-bg-color, #1c1c1e);
-            --accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            --gold-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --diamond-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --bg: #0A0A0A;
+            --card-bg: #1C1C1E;
+            --text: #FFFFFF;
+            --text-secondary: #8E8E93;
+            --accent: #5B2EFF;
+            --accent-yellow: #FFD600;
+            --accent-blue: #007AFF;
+            --separator: #2C2C2E;
+            --radius-card: 16px;
+            --radius-btn: 24px;
+            --radius-sm: 12px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
-            overflow-x: hidden;
+            padding: 0 16px 40px;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 32px 20px 24px;
-            position: relative;
-            overflow: hidden;
+        /* ===== Header ===== */
+        .header {
+            padding: 28px 0 20px;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.12) 0%, transparent 60%);
-            pointer-events: none;
+        .header h1 {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
         }
 
-        .hero-emoji {
-            font-size: 64px;
-            margin-bottom: 12px;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .hero h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            color: var(--hint);
+        .header p {
+            color: var(--text-secondary);
             font-size: 15px;
-            line-height: 1.4;
+            font-weight: 400;
         }
 
-        /* Stats Bar */
-        .stats-bar {
+        /* ===== Stats ===== */
+        .stats {
             display: flex;
-            justify-content: center;
-            gap: 24px;
-            padding: 16px 20px;
-            margin: 0 16px 20px;
-            background: var(--section-bg);
-            border-radius: 16px;
-            border: 1px solid var(--section-sep);
+            gap: 10px;
+            margin-bottom: 24px;
         }
 
-        .stat {
+        .stat-card {
+            flex: 1;
+            background: var(--card-bg);
+            border-radius: var(--radius-card);
+            padding: 14px;
             text-align: center;
         }
 
         .stat-number {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 700;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--accent);
+        }
+
+        .stat-number.yellow {
+            color: var(--accent-yellow);
+        }
+
+        .stat-number.green {
+            color: #34C759;
         }
 
         .stat-label {
             font-size: 11px;
-            color: var(--hint);
+            color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-top: 2px;
         }
 
-        /* Category */
-        .category {
-            margin: 0 16px 20px;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--section-sep);
-            background: var(--section-bg);
-        }
-
-        .category-header {
-            padding: 14px 20px;
-            font-weight: 600;
+        /* ===== Category Label ===== */
+        .category-label {
             font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #fff;
+            margin: 24px 0 12px 4px;
+        }
+
+        .category-label .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+
+        .dot.green { background: #34C759; }
+        .dot.purple { background: var(--accent); }
+        .dot.blue { background: #4FACFE; }
+
+        /* ===== Gift Card ===== */
+        .gift-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-card);
+            padding: 16px;
+            margin-bottom: 12px;
+            transition: opacity 0.3s ease;
             position: relative;
-            overflow: hidden;
         }
 
-        .category-header.tier-1 { background: var(--success-gradient); }
-        .category-header.tier-2 { background: var(--accent-gradient); }
-        .category-header.tier-3 { background: var(--diamond-gradient); }
-
-        /* Gift Item */
-        .gift-item {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--section-sep);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+        .gift-card.booked {
+            opacity: 0.4;
         }
 
-        .gift-item:last-child {
-            border-bottom: none;
-        }
-
-        .gift-item:active {
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        .gift-item.booked {
-            opacity: 0.45;
-        }
-
-        .gift-item.booked::after {
-            content: 'ЗАБРОНИРОВАНО';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-15deg);
-            font-size: 14px;
-            font-weight: 700;
-            color: rgba(56, 239, 125, 0.35);
-            letter-spacing: 3px;
-            pointer-events: none;
-        }
-
-        .gift-top-row {
+        .gift-card-top {
             display: flex;
-            align-items: flex-start;
             justify-content: space-between;
+            align-items: flex-start;
             gap: 12px;
         }
 
-        .gift-info {
+        .gift-name {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.35;
             flex: 1;
         }
 
-        .gift-title {
-            font-weight: 600;
-            font-size: 16px;
-            line-height: 1.3;
-            margin-bottom: 6px;
+        .gift-price {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent);
+            white-space: nowrap;
         }
 
-        .gift-price {
-            font-size: 20px;
-            font-weight: 700;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 8px;
+        .gift-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 14px;
         }
 
         .gift-link {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            color: var(--hint);
+            gap: 5px;
+            color: var(--text-secondary);
             font-size: 13px;
             text-decoration: none;
-            padding: 4px 10px;
+            padding: 6px 12px;
             background: rgba(255, 255, 255, 0.06);
-            border-radius: 8px;
-            transition: all 0.2s ease;
+            border-radius: 10px;
+            transition: background 0.2s;
         }
 
         .gift-link:active {
             background: rgba(255, 255, 255, 0.12);
         }
 
-        /* Book Button */
-        .book-button {
-            background: var(--accent-gradient);
-            color: #fff;
-            border: none;
-            border-radius: 12px;
-            padding: 10px 20px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            font-family: 'Inter', sans-serif;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .book-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .book-button:active::before {
-            left: 100%;
-        }
-
-        .book-button:disabled {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--hint);
-            cursor: not-allowed;
-        }
-
-        .book-button.booked-btn {
-            background: var(--success-gradient);
-        }
-
-        /* Booked info */
-        .booked-info {
-            display: flex;
+        /* ===== Buttons ===== */
+        .btn-book {
+            display: inline-flex;
             align-items: center;
             gap: 6px;
-            margin-top: 8px;
-            font-size: 12px;
-            color: #38ef7d;
+            background: transparent;
+            color: var(--accent-yellow);
+            border: 1.5px solid var(--accent-yellow);
+            border-radius: var(--radius-btn);
+            padding: 8px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
         }
 
-        .booked-info .check-icon {
-            width: 14px;
-            height: 14px;
-            background: var(--success-gradient);
-            border-radius: 50%;
+        .btn-book:active {
+            background: rgba(255, 214, 0, 0.1);
+            transform: scale(0.97);
+        }
+
+        .btn-book:disabled {
+            border-color: var(--separator);
+            color: var(--text-secondary);
+            cursor: default;
+        }
+
+        .btn-book.done {
+            border-color: #34C759;
+            color: #34C759;
+            background: rgba(52, 199, 89, 0.08);
+        }
+
+        /* ===== Booked Badge ===== */
+        .booked-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: #34C759;
+            margin-top: 10px;
+        }
+
+        .booked-badge::before {
+            content: '✓';
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 9px;
+            width: 16px;
+            height: 16px;
+            background: #34C759;
             color: #fff;
+            border-radius: 50%;
+            font-size: 10px;
+            font-weight: 700;
         }
 
-        /* Footer */
+        /* ===== Footer ===== */
         .footer {
             text-align: center;
-            padding: 24px 20px 40px;
-            color: var(--hint);
+            padding: 32px 0 16px;
+            color: var(--text-secondary);
             font-size: 12px;
         }
 
-        .footer .heart {
-            display: inline-block;
-            animation: pulse 1.5s ease-in-out infinite;
+        /* ===== Toast ===== */
+        .toast {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: var(--card-bg);
+            border: 1px solid var(--separator);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: var(--radius-card);
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 10000;
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
         }
 
-        /* Confetti overlay */
+        /* ===== Confetti ===== */
         .confetti-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             pointer-events: none;
             z-index: 9999;
         }
 
         .confetti-piece {
             position: absolute;
-            width: 10px;
-            height: 10px;
             border-radius: 2px;
-            animation: confetti-fall 2s ease-out forwards;
+            animation: confetti-fall 2.2s ease-out forwards;
         }
 
         @keyframes confetti-fall {
-            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+            0% { transform: translateY(-20px) rotate(0deg) scale(1); opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg) scale(0.5); opacity: 0; }
         }
 
-        /* Toast notification */
-        .toast {
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: var(--section-bg);
-            border: 1px solid var(--section-sep);
-            color: var(--text);
-            padding: 12px 24px;
-            border-radius: 16px;
-            font-size: 14px;
-            font-weight: 500;
-            z-index: 10000;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        /* ===== Empty state ===== */
+        .empty-state {
+            text-align: center;
+            padding: 48px 20px;
+            color: var(--text-secondary);
         }
 
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
+        .empty-state .emoji {
+            font-size: 48px;
+            margin-bottom: 12px;
         }
     </style>
 </head>
 <body>
-    <div class="hero">
-        <div class="hero-emoji">🎁</div>
-        <h1>Wishlist для Влада</h1>
+
+    <div class="header">
+        <h1>🎁 Wishlist</h1>
         <p>Выберите подарок и забронируйте анонимно</p>
     </div>
 
-    <div class="stats-bar">
-        <div class="stat">
+    <div class="stats">
+        <div class="stat-card">
             <div class="stat-number" id="total-count">3</div>
             <div class="stat-label">Всего</div>
         </div>
-        <div class="stat">
-            <div class="stat-number" id="available-count">3</div>
+        <div class="stat-card">
+            <div class="stat-number yellow" id="available-count">3</div>
             <div class="stat-label">Доступно</div>
         </div>
-        <div class="stat">
-            <div class="stat-number" id="booked-count">0</div>
+        <div class="stat-card">
+            <div class="stat-number green" id="booked-count">0</div>
             <div class="stat-label">Забронировано</div>
         </div>
     </div>
 
-    <div class="category">
-        <div class="category-header tier-1">💰 До $50</div>
-        <div class="gift-item" data-id="water-filter">
-            <div class="gift-top-row">
-                <div class="gift-info">
-                    <div class="gift-title">Фильтр обратного осмоса Stoewer A7</div>
-                    <div class="gift-price">~$45</div>
-                    <a href="https://ozon.kz/product/filtr-obratnogo-osmosa-stoewer-a7-nabor-smennyh-kartridzhey-k3-3-sht-1586447237/" class="gift-link" target="_blank">🔗 Ozon.kz</a>
-                </div>
-                <button class="book-button" onclick="bookGift('water-filter')">Забронировать</button>
-            </div>
+    <!-- До $50 -->
+    <div class="category-label"><span class="dot green"></span>До $50</div>
+
+    <div class="gift-card" data-id="water-filter">
+        <div class="gift-card-top">
+            <div class="gift-name">Фильтр обратного осмоса Stoewer A7</div>
+            <div class="gift-price">$45</div>
+        </div>
+        <div class="gift-bottom">
+            <a href="https://ozon.kz/product/filtr-obratnogo-osmosa-stoewer-a7-nabor-smennyh-kartridzhey-k3-3-sht-1586447237/" class="gift-link" target="_blank">🔗 Ozon.kz</a>
+            <button class="btn-book" onclick="bookGift('water-filter')">🎁 Забронировать</button>
         </div>
     </div>
 
-    <div class="category">
-        <div class="category-header tier-2">💎 $50 — $200</div>
-        <div class="gift-item" data-id="foot-massager">
-            <div class="gift-top-row">
-                <div class="gift-info">
-                    <div class="gift-title">Массажер для ног электрический Foot Spa</div>
-                    <div class="gift-price">~$120</div>
-                    <a href="https://ozon.kz/product/massazher-dlya-nog-i-beder-elektricheskiy-foot-spa-3-rezhima-massazha-s-podogrevom-puf-3165162282/" class="gift-link" target="_blank">🔗 Ozon.kz</a>
-                </div>
-                <button class="book-button" onclick="bookGift('foot-massager')">Забронировать</button>
-            </div>
+    <!-- $50 — $200 -->
+    <div class="category-label"><span class="dot purple"></span>$50 — $200</div>
+
+    <div class="gift-card" data-id="foot-massager">
+        <div class="gift-card-top">
+            <div class="gift-name">Массажер для ног электрический Foot Spa</div>
+            <div class="gift-price">$120</div>
+        </div>
+        <div class="gift-bottom">
+            <a href="https://ozon.kz/product/massazher-dlya-nog-i-beder-elektricheskiy-foot-spa-3-rezhima-massazha-s-podogrevom-puf-3165162282/" class="gift-link" target="_blank">🔗 Ozon.kz</a>
+            <button class="btn-book" onclick="bookGift('foot-massager')">🎁 Забронировать</button>
         </div>
     </div>
 
-    <div class="category">
-        <div class="category-header tier-3">🚀 $500+</div>
-        <div class="gift-item" data-id="bambu-h2s">
-            <div class="gift-top-row">
-                <div class="gift-info">
-                    <div class="gift-title">Bambu Lab A1 mini — 3D принтер</div>
-                    <div class="gift-price">~$599</div>
-                    <a href="https://bambulab.com/en/a1-mini" class="gift-link" target="_blank">🔗 Bambu Lab</a>
-                </div>
-                <button class="book-button" onclick="bookGift('bambu-h2s')">Забронировать</button>
-            </div>
+    <!-- $500+ -->
+    <div class="category-label"><span class="dot blue"></span>$500+</div>
+
+    <div class="gift-card" data-id="bambu-h2s">
+        <div class="gift-card-top">
+            <div class="gift-name">Bambu Lab A1 mini — 3D принтер</div>
+            <div class="gift-price">$599</div>
+        </div>
+        <div class="gift-bottom">
+            <a href="https://bambulab.com/en/a1-mini" class="gift-link" target="_blank">🔗 Bambu Lab</a>
+            <button class="btn-book" onclick="bookGift('bambu-h2s')">🎁 Забронировать</button>
         </div>
     </div>
 
     <div class="footer">
-        Сделано с <span class="heart">❤️</span> Максом 🤖
+        Сделано с ❤️ Максом 🤖
     </div>
 
     <div class="toast" id="toast"></div>
@@ -423,97 +372,98 @@
         const tg = window.Telegram.WebApp;
         tg.ready();
         tg.expand();
-        tg.setHeaderColor('#0a0a0a');
 
-        let bookedGifts = JSON.parse(localStorage.getItem('bookedGifts') || '{}');
+        // Sync with Telegram theme
+        try {
+            tg.setHeaderColor('#0A0A0A');
+            tg.setBackgroundColor('#0A0A0A');
+        } catch(e) {}
+
+        let bookedGifts = JSON.parse(localStorage.getItem('wishlist_booked') || '{}');
 
         document.addEventListener('DOMContentLoaded', updateUI);
 
         function updateUI() {
-            let bookedCount = 0;
-            document.querySelectorAll('.gift-item').forEach(item => {
-                const giftId = item.dataset.id;
-                if (bookedGifts[giftId]) {
-                    bookedCount++;
-                    item.classList.add('booked');
-                    const btn = item.querySelector('.book-button');
-                    btn.textContent = '✓ Забронировано';
-                    btn.disabled = true;
-                    btn.classList.add('booked-btn');
+            let booked = 0;
+            document.querySelectorAll('.gift-card').forEach(card => {
+                const id = card.dataset.id;
+                if (bookedGifts[id]) {
+                    booked++;
+                    card.classList.add('booked');
 
-                    // Add booked info
-                    let info = item.querySelector('.booked-info');
-                    if (!info) {
-                        info = document.createElement('div');
-                        info.className = 'booked-info';
-                        info.innerHTML = `<span class="check-icon">✓</span> Кто-то уже выбрал этот подарок`;
-                        item.querySelector('.gift-info').appendChild(info);
+                    const btn = card.querySelector('.btn-book');
+                    btn.innerHTML = '✓ Забронировано';
+                    btn.disabled = true;
+                    btn.classList.add('done');
+
+                    if (!card.querySelector('.booked-badge')) {
+                        const badge = document.createElement('div');
+                        badge.className = 'booked-badge';
+                        badge.textContent = 'Кто-то уже выбрал этот подарок';
+                        card.appendChild(badge);
                     }
                 }
             });
 
-            const total = document.querySelectorAll('.gift-item').length;
+            const total = document.querySelectorAll('.gift-card').length;
             document.getElementById('total-count').textContent = total;
-            document.getElementById('available-count').textContent = total - bookedCount;
-            document.getElementById('booked-count').textContent = bookedCount;
+            document.getElementById('available-count').textContent = total - booked;
+            document.getElementById('booked-count').textContent = booked;
         }
 
         function showToast(text) {
-            const toast = document.getElementById('toast');
-            toast.textContent = text;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2500);
+            const t = document.getElementById('toast');
+            t.textContent = text;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2500);
         }
 
         function fireConfetti() {
             const overlay = document.getElementById('confetti');
-            const colors = ['#667eea', '#764ba2', '#38ef7d', '#f5576c', '#4facfe', '#ffd700'];
-            for (let i = 0; i < 40; i++) {
-                const piece = document.createElement('div');
-                piece.className = 'confetti-piece';
-                piece.style.left = Math.random() * 100 + '%';
-                piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-                piece.style.animationDelay = Math.random() * 0.5 + 's';
-                piece.style.width = (Math.random() * 8 + 5) + 'px';
-                piece.style.height = (Math.random() * 8 + 5) + 'px';
-                overlay.appendChild(piece);
+            const colors = ['#5B2EFF', '#FFD600', '#34C759', '#4FACFE', '#FF6B6B', '#FF9F43'];
+            for (let i = 0; i < 35; i++) {
+                const p = document.createElement('div');
+                p.className = 'confetti-piece';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.background = colors[Math.floor(Math.random() * colors.length)];
+                p.style.animationDelay = Math.random() * 0.4 + 's';
+                p.style.width = (Math.random() * 7 + 4) + 'px';
+                p.style.height = (Math.random() * 7 + 4) + 'px';
+                overlay.appendChild(p);
             }
-            setTimeout(() => { overlay.innerHTML = ''; }, 2500);
+            setTimeout(() => overlay.innerHTML = '', 2500);
         }
 
         function bookGift(giftId) {
             if (bookedGifts[giftId]) {
-                showToast('⚠️ Этот подарок уже забронирован');
+                showToast('⚠️ Уже забронировано');
                 return;
             }
 
             const userName = tg.initDataUnsafe?.user?.first_name || 'Аноним';
 
-            tg.showConfirm('Забронировать этот подарок?', function(confirmed) {
-                if (!confirmed) return;
+            tg.showConfirm('Забронировать этот подарок?', function(ok) {
+                if (!ok) return;
 
                 bookedGifts[giftId] = {
-                    bookedBy: userName,
-                    bookedAt: new Date().toISOString()
+                    by: userName,
+                    at: new Date().toISOString()
                 };
+                localStorage.setItem('wishlist_booked', JSON.stringify(bookedGifts));
 
-                localStorage.setItem('bookedGifts', JSON.stringify(bookedGifts));
+                const title = document.querySelector(`[data-id="${giftId}"] .gift-name`).textContent;
 
-                const giftTitle = document.querySelector(`[data-id="${giftId}"] .gift-title`).textContent;
-
-                tg.sendData(JSON.stringify({
-                    action: 'gift_booked',
-                    giftId: giftId,
-                    giftTitle: giftTitle,
-                    bookedBy: userName
-                }));
+                try {
+                    tg.sendData(JSON.stringify({
+                        action: 'gift_booked',
+                        giftId, giftTitle: title, bookedBy: userName
+                    }));
+                } catch(e) {}
 
                 fireConfetti();
-                showToast(`🎉 «${giftTitle}» забронирован!`);
+                showToast('🎉 ' + title + ' — забронировано!');
 
-                if (tg.HapticFeedback) {
-                    tg.HapticFeedback.notificationOccurred('success');
-                }
+                try { tg.HapticFeedback.notificationOccurred('success'); } catch(e) {}
 
                 updateUI();
             });
