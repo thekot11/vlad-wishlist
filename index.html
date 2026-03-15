@@ -241,6 +241,27 @@
             font-weight: 700;
         }
 
+        /* ===== Cancel Button ===== */
+        .btn-cancel {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--separator);
+            border-radius: 12px;
+            padding: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .btn-cancel:active {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
         /* ===== Footer ===== */
         .footer {
             text-align: center;
@@ -396,21 +417,44 @@
 
         function render() {
             let cnt = 0;
+            const myName = tg.initDataUnsafe?.user?.first_name || null;
+
             document.querySelectorAll('.gift-card').forEach(c => {
                 const id = c.dataset.id;
+
+                // Reset state
+                c.classList.remove('booked');
+                const oldBadge = c.querySelector('.booked-badge');
+                if (oldBadge) oldBadge.remove();
+                const oldCancel = c.querySelector('.btn-cancel');
+                if (oldCancel) oldCancel.remove();
+
+                const btn = c.querySelector('.btn-book');
+
                 if (booked[id]) {
                     cnt++;
                     c.classList.add('booked');
-                    const btn = c.querySelector('.btn-book');
                     btn.textContent = '✓ Забронировано';
                     btn.disabled = true;
                     btn.classList.add('done');
-                    if (!c.querySelector('.booked-badge')) {
-                        const b = document.createElement('div');
-                        b.className = 'booked-badge';
-                        b.textContent = 'Кто-то уже осчастливил Влада этим подарком';
-                        c.querySelector('.gift-body').appendChild(b);
+
+                    const isMine = booked[id].by === myName;
+                    const badge = document.createElement('div');
+                    badge.className = 'booked-badge';
+                    badge.textContent = isMine ? 'Вы забронировали этот подарок' : 'Кто-то уже выбрал этот подарок';
+                    c.querySelector('.gift-body').appendChild(badge);
+
+                    if (isMine) {
+                        const cancelBtn = document.createElement('button');
+                        cancelBtn.className = 'btn-cancel';
+                        cancelBtn.textContent = 'Отменить бронь';
+                        cancelBtn.onclick = function() { cancelBooking(id); };
+                        c.querySelector('.gift-body').appendChild(cancelBtn);
                     }
+                } else {
+                    btn.textContent = 'Забронировать';
+                    btn.disabled = false;
+                    btn.classList.remove('done');
                 }
             });
             const total = document.querySelectorAll('.gift-card').length;
@@ -440,6 +484,17 @@
                 o.appendChild(p);
             }
             setTimeout(() => o.innerHTML = '', 2500);
+        }
+
+        function cancelBooking(id) {
+            tg.showConfirm('Отменить бронь на этот подарок?', function(ok) {
+                if (!ok) return;
+                delete booked[id];
+                localStorage.setItem('wishlist_v2', JSON.stringify(booked));
+                showToast('Бронь отменена');
+                try { tg.HapticFeedback.notificationOccurred('warning'); } catch(e) {}
+                render();
+            });
         }
 
         function bookGift(id) {
