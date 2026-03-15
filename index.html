@@ -309,9 +309,9 @@
         <div class="hero-emoji">🎂</div>
         <h1>Вишлист <span class="name">Влада</span></h1>
         <div class="hero-subtitle">
-            Человеку скоро 30, а он мечтает о фильтре для воды и массажёре для ног. Да, мы тоже в шоке.
+            28 лет. Мечтает о фильтре для воды и массажёре. До кризиса среднего возраста ещё два года, но подготовка идёт полным ходом.
         </div>
-        <div class="hero-age">⚠️ Почти 30. Не шутка.</div>
+        <div class="hero-age">🎈 Исполняется 28</div>
     </div>
 
     <div class="stats">
@@ -337,7 +337,7 @@
         </div>
         <div class="gift-body">
             <div class="gift-name">Фильтр обратного осмоса Stoewer A7</div>
-            <div class="gift-comment">«Мне почти 30, и самое горячее желание — чистая вода из-под крана. Вот такая взрослая жизнь.»</div>
+            <div class="gift-comment">«Да, в 28 лет можно хотеть чистую воду. Не спрашивайте.»</div>
             <div class="gift-actions">
                 <a href="https://ozon.kz/product/filtr-obratnogo-osmosa-stoewer-a7-nabor-smennyh-kartridzhey-k3-3-sht-1586447237/" class="gift-link" target="_blank">🔗 Ozon.kz</a>
                 <button class="btn-book" onclick="bookGift('water-filter')">Забронировать</button>
@@ -353,7 +353,7 @@
         </div>
         <div class="gift-body">
             <div class="gift-name">Массажёр для ног Foot Spa</div>
-            <div class="gift-comment">«Ноги болят как у пенсионера. Осталось только кресло-качалку заказать и картину маслом.»</div>
+            <div class="gift-comment">«Подогрев, три режима, пуфик в комплекте. Он точно не 48?»</div>
             <div class="gift-actions">
                 <a href="https://ozon.kz/product/massazher-dlya-nog-i-beder-elektricheskiy-foot-spa-3-rezhima-massazha-s-podogrevom-puf-3165162282/" class="gift-link" target="_blank">🔗 Ozon.kz</a>
                 <button class="btn-book" onclick="bookGift('foot-massager')">Забронировать</button>
@@ -369,7 +369,7 @@
         </div>
         <div class="gift-body">
             <div class="gift-name">Bambu Lab A1 mini — 3D принтер</div>
-            <div class="gift-comment">«Ладно, хоть одно желание из 2015 года. Но нет, он не будет печатать ничего полезного. Только фигурки.»</div>
+            <div class="gift-comment">«Единственный подарок в списке, который хоть как-то соответствует возрасту.»</div>
             <div class="gift-actions">
                 <a href="https://bambulab.com/en/a1-mini" class="gift-link" target="_blank">🔗 Bambu Lab</a>
                 <button class="btn-book" onclick="bookGift('bambu-h2s')">Забронировать</button>
@@ -378,8 +378,8 @@
     </div>
 
     <div class="footer">
-        <div class="note">🎈 Спасибо, что терпите его вишлист</div>
-        Сделано ИИ-ассистентом, который знает Влада лучше, чем он сам
+        <div class="note">🎈 Спасибо, что зашли</div>
+        Бронирование анонимное — Влад не узнает кто что выбрал
     </div>
 
     <div class="toast" id="toast"></div>
@@ -447,7 +447,7 @@
 
             const name = tg.initDataUnsafe?.user?.first_name || 'Аноним';
 
-            tg.showConfirm('Забронировать этот подарок для почти-30-летнего Влада?', function(ok) {
+            tg.showConfirm('Забронировать этот подарок?', function(ok) {
                 if (!ok) return;
                 booked[id] = { by: name, at: new Date().toISOString() };
                 localStorage.setItem('wishlist_v2', JSON.stringify(booked));
